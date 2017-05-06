@@ -18,3 +18,6 @@ erl_crash.dump
 
 # Also ignore archive artifacts (built via "mix archive.build").
 *.ez
+
+# Don't know it needs to be versioned, but ignoring it for now
+mix.lock
