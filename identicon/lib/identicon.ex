@@ -8,6 +8,7 @@ defmodule Identicon do
     |> hash_input
     |> pick_color
     |> build_grid
+    |> filter_even_squares
   end
   
   def hash_input(input) do
@@ -33,6 +34,14 @@ defmodule Identicon do
       |> Enum.with_index
 
     %Identicon.Image{image | grid: grid}
+  end
+
+  def filter_even_squares(%Identicon.Image{grid: grid} = image) do
+    even_grid = Enum.filter grid, fn({code, _index}) ->
+      rem(code, 2) == 0
+    end
+
+    %Identicon.Image{image | grid: even_grid}
   end
 
   @doc """
