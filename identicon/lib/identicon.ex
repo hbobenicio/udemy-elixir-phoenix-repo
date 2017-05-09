@@ -9,6 +9,7 @@ defmodule Identicon do
     |> pick_color
     |> build_grid
     |> filter_even_squares
+    |> build_pixel_map
   end
   
   def hash_input(input) do
@@ -18,11 +19,8 @@ defmodule Identicon do
     %Identicon.Image{hex: hex}
   end
 
-  # def pick_color(%Identicon.Image{hex: [r, g, b | _tail]} = image) do
   def pick_color(image) do
-    # %Identicon.Image{hex: [r, g, b | _tail]} = image
     [r, g, b | _tail] = image.hex
-    
     %Identicon.Image{image | color: {r, g, b}}
   end
 
@@ -42,6 +40,20 @@ defmodule Identicon do
     end
 
     %Identicon.Image{image | grid: even_grid}
+  end
+
+  def build_pixel_map(%Identicon.Image{grid: grid} = image) do
+    pixel_map = Enum.map grid, fn({_code, index}) ->
+      x = rem(index, 5) * 50
+      y = div(index, 5) * 50
+      
+      top_left = {x, y}
+      bottom_right = {x + 50, y + 50}
+
+      {top_left, bottom_right}
+    end
+
+    %Identicon.Image{image | pixel_map: pixel_map}
   end
 
   @doc """
