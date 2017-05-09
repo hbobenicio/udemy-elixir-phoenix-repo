@@ -26,10 +26,9 @@ defmodule Identicon do
   end
 
   def build_grid(%Identicon.Image{hex: hex}) do
-    chunked_hex = hex |> Enum.chunk(3)
-    for row <- chunked_hex do
-      mirror_row(row)
-    end
+    hex
+    |> Enum.chunk(3)
+    |> Enum.map(&mirror_row/1)
   end
 
   @doc """
