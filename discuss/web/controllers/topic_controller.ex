@@ -10,7 +10,14 @@ defmodule Discuss.TopicController do
   end
 
   def create(conn, %{"topic" => topic} = _params) do
-    IO.inspect topic
+    changeset = Topic.changeset(%Topic{}, topic)
+
+    case Repo.insert(changeset) do
+      {:ok, topic} -> IO.inspect(topic)
+      {:error, changeset} ->
+        render(conn, "new.html", changeset: changeset)
+    end
+    
   end
   
 end
