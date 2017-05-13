@@ -3,6 +3,9 @@ defmodule Discuss.TopicController do
 
   alias Discuss.Topic
 
+  def index(conn, _params) do
+  end
+
   def new(conn, _params) do
     changeset = Topic.changeset(%Topic{}, %{})
 
@@ -17,7 +20,7 @@ defmodule Discuss.TopicController do
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
-    
+
   end
-  
+
 end
