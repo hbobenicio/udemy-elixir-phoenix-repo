@@ -10,7 +10,6 @@ defmodule Discuss.TopicController do
 
   def new(conn, _params) do
     changeset = Topic.changeset(%Topic{}, %{})
-
     render conn, "new.html", changeset: changeset
   end
 
@@ -25,6 +24,9 @@ defmodule Discuss.TopicController do
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
+  end
+
+  def edit(conn, %{"id" => topic_id} = _params) do
 
   end
 
