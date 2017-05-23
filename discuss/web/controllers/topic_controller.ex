@@ -3,6 +3,7 @@ defmodule Discuss.TopicController do
 
   alias Discuss.Topic
 
+  # GET /topics
   def index(conn, _params) do
     query = from(t in Topic, order_by: t.title)
     topics = Repo.all(query)
@@ -11,11 +12,13 @@ defmodule Discuss.TopicController do
     render conn, "index.html", topics: topics
   end
 
+  # GET /topics/new
   def new(conn, _params) do
     changeset = Topic.changeset(%Topic{}, %{})
     render conn, "new.html", changeset: changeset
   end
 
+  # POST /topics
   def create(conn, %{"topic" => topic} = _params) do
     changeset = Topic.changeset(%Topic{}, topic)
 
@@ -29,6 +32,7 @@ defmodule Discuss.TopicController do
     end
   end
 
+  # GET /topics/:id/edit
   def edit(conn, %{"id" => topic_id} = _params) do
     topic = Repo.get(Topic, topic_id)
     changeset = Topic.changeset(topic)
@@ -36,6 +40,8 @@ defmodule Discuss.TopicController do
     render conn, "edit.html", changeset: changeset, topic: topic
   end
 
+  # PATCH /topics/:id
+  # PUT /topics/:id
   def update(conn, %{"id" => topic_id, "topic" => topic} = _params) do
     old_topic = Repo.get(Topic, topic_id)
     changeset = Topic.changeset(old_topic, topic)
@@ -50,6 +56,7 @@ defmodule Discuss.TopicController do
     end
   end
 
+  # DELETE /topics/:id
   def delete(conn, %{"id" => topic_id} = _params) do
     Repo.get!(Topic, topic_id) |> Repo.delete!
 
