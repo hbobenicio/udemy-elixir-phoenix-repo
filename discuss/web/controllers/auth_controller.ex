@@ -4,12 +4,7 @@ defmodule Discuss.AuthController do
 
   # SCOPE "/auth"
   # GET "/:provider/callback"
-  def callback(conn, params) do
-    IO.inspect "++++"
-    IO.inspect conn.assigns
-    IO.inspect "++++"
-    IO.inspect params
-    IO.inspect "++++"
+  def callback(_conn, _params) do
   end
 
 end
