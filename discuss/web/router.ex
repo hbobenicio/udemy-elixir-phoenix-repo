@@ -7,6 +7,11 @@ defmodule Discuss.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+
+    # Plug Responsible for getting the user_id from the session (set after
+    # OAuth authentication), searching for the user on the database with that
+    # id and assigning it to 'conn.assigns.user'
+    plug Discuss.Plugs.SetUser
   end
 
   pipeline :api do
@@ -30,6 +35,9 @@ defmodule Discuss.Router do
 
   scope "/auth", Discuss do
     pipe_through :browser
+
+    # This needs to be first. Why?
+    get "/signout", AuthController, :signout
 
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
