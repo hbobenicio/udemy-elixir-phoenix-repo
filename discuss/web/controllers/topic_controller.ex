@@ -3,6 +3,9 @@ defmodule Discuss.TopicController do
 
   alias Discuss.Topic
 
+  # Execute this Plug only for some actions inside this controller
+  plug Discuss.Plugs.RequireAuth when action in [:new, :create, :edit, :update, :delete]
+
   # GET /topics
   def index(conn, _params) do
     query = from(t in Topic, order_by: t.title)
