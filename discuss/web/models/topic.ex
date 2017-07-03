@@ -5,6 +5,8 @@ defmodule Discuss.Topic do
   # Define the associations with its columns as well.
   schema "topics" do
     field :title, :string
+
+    belongs_to :user, Discuss.User
   end
 
   def changeset(struct, params \\ %{}) do
@@ -12,5 +14,5 @@ defmodule Discuss.Topic do
     |> cast(params, [:title])
     |> validate_required([:title])
   end
-  
+
 end
